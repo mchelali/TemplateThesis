@@ -1,0 +1,198 @@
+\documentclass[12pt]{book}
+%\usepackage{natbib}
+\usepackage[
+	backend=bibtex,
+	style=numeric,
+]{biblatex}
+\addbibresource{bibliographie}
+
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,left=3cm,right=2.5cm,top=3cm,bottom=3cm, twoside]{geometry}
+\usepackage{xcolor}
+\usepackage{stmaryrd}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{libertine}
+\usepackage[pdftex]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{apalike}
+\usepackage{minitoc}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{epigraph}
+%\usetikzlibrary{shadows.blur}
+\usepackage{lscape}
+\usepackage{titletoc}
+%\usepackage{lipsum}
+%\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{arydshln}
+\usepackage[nonumberlist]{glossaries}
+\usepackage{calc}
+\usepackage[]{titlesec} 
+\definecolor{linkColor}{HTML}{32a852}
+\usepackage[colorlinks=true,citecolor=linkColor,linkcolor=black]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{lipsum}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{yourcolor}{HTML}{8a0e19}%{008bb2}
+
+\titleformat{\chapter}[display]
+{\normalfont\color{yourcolor}}
+{\filleft\huge\color{black}\textsc\chaptertitlename\hspace*{2mm}%
+	\begin{tikzpicture}[baseline={([yshift=-.6ex]current bounding box.center)}]
+	\node[fill=yourcolor,circle,text=white] {\thechapter};
+	\end{tikzpicture}
+}
+{1ex}
+{\titlerule[1.5pt]\vspace*{1.5ex}\Huge\color{black}\textsc}
+[]
+
+\titleformat{name=\chapter,numberless}[display]
+{\normalfont\color{black}}
+{}
+{1ex}
+{\vspace*{-5cm}\Huge\textsc}
+[]
+
+%command to print the acutal minitoc
+\newcommand{\printmyminitoc}[1]{%
+	\noindent\hspace{1cm}%
+	\colorlet{chpnumbercolor}{black}%
+	\begin{tikzpicture}
+	\node(s){
+		\begin{minipage}{.9\linewidth}%minipage trick
+		\printcontents[chapters]{}{1}{}
+		\end{minipage}
+	};
+	{
+		\color{yourcolor}
+		\draw(s.north west)--(s.north east) (s.south west)--(s.south east);
+	}
+	\end{tikzpicture}
+	\vspace*{3ex}
+	
+	#1
+	\vfill
+	\pagebreak
+}
+
+
+\newcommand{\HRule}{\rule{\linewidth}{0.7mm}}
+\newcommand{\Hrule}{\rule{\linewidth}{0.3mm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\begin{document}
+	
+	\begin{titlepage}
+		\begin{center}
+			\begin{tabular}{c@{\hskip 3cm}c}
+				\includegraphics[height=1cm]{images/Universite_Paris_logo_horizontal_2000px.png} &
+				\includegraphics[height=1cm]{images/LIPADE.png}\\
+			\end{tabular}
+		\end{center}
+	
+		
+		\begin{center}
+
+			Université de Paris\\
+			Laboratoire d’Informatique Paris Descartes (EA 2517)
+  
+  			\vfill
+  			
+	 		\HRule \\[0.1cm]
+	 		 { \Large \bfseries Title	 }
+	  		\Hrule \\
+		
+		\end{center}
+		
+		\vfill
+			
+		\begin{center}
+			Presented by \textsc{\Large FULLNAME}\\[1cm] 
+			PhD thesis in \textsc{\large SPECIALTY}\\[1cm]
+		
+	
+			
+			\vspace{1cm}
+	
+			June 2021
+		\end{center}
+		
+		\vspace{1cm}
+			
+		
+		\begin{center}
+			\begin{tabular}{lll}
+				 \textsc{FULLNAME}  &  \textsc{Grade} & Reporter\\
+				\textsc{FULLNAME}  &  \textsc{Grade} & Reporter \\
+				\textsc{FULLNAME}  &  \textsc{Grade} & Supervisor\\
+				\textsc{FULLNAME}  &  \textsc{Grade} & Supervisor \\
+				
+			\end{tabular}\\[1cm]
+		\end{center}
+
+	\newpage
+	\end{titlepage}
+
+
+
+\pagestyle{fancy}
+
+\fancyhead{}
+
+\renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
+
+
+\frontmatter
+
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table des matières}
+
+\listoffigures
+\addcontentsline{toc}{chapter}{Liste des figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+
+
+\mainmatter
+
+\setlength{\parskip}{.7em}
+
+\titlespacing*{\section}{0pt}{.9em}{.8em}
+\renewcommand{\baselinestretch}{1.1}
+
+
+\fancyhead[RO]{\leftmark}
+\fancyhead[LE]{\textsc{\chaptername~\thechapter}}
+
+
+\input{Chapters/intro.tex}
+
+\part{Stae of the art}
+\input{Chapters/chapter01.tex}
+
+\part{Contribution}
+\input{Chapters/chapter02.tex}
+
+
+\printbibliography
+\addcontentsline{toc}{chapter}{Bibliographie}
+
+\end{document}
