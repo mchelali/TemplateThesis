@@ -1,16 +1,22 @@
 \documentclass[12pt]{book}
 %\usepackage{natbib}
 \usepackage[
-	backend=bibtex,
-	style=numeric,
+backend=bibtex,
+style=numeric,
+doi=false,
+isbn=true,
+url=false,
+eprint=false,
+abbreviate=false,
+%sorting=none
 ]{biblatex}
 \addbibresource{bibliographie}
 
 
-\usepackage[english]{babel}
+\usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[a4paper,left=3cm,right=2.5cm,top=3cm,bottom=3cm, twoside]{geometry}
+\usepackage[includefoot, a4paper,left=3cm,right=2.5cm,top=3cm,bottom=3cm, twoside]{geometry}
 \usepackage{xcolor}
 \usepackage{stmaryrd}
 \usepackage{amssymb}
@@ -33,35 +39,68 @@
 %\usepackage{cite}
 \usepackage{booktabs}
 \usepackage{arydshln}
-\usepackage[nonumberlist]{glossaries}
+\usepackage[nonumberlist, nomain]{glossaries}
 \usepackage{calc}
 \usepackage[]{titlesec} 
-\definecolor{linkColor}{HTML}{32a852}
-\usepackage[colorlinks=true,citecolor=linkColor,linkcolor=black]{hyperref}
+\usepackage[export]{adjustbox}
+\usepackage[bottom]{footmisc}
+\usepackage{appendix}
+\definecolor{linkColor}{HTML}{32a852}%black
+\usepackage[colorlinks=true,
+citecolor=linkColor,linkcolor=linkColor]{hyperref}
+
+%\captionsetup{labelfont=sc}
+\def\frenchtablename{Tableau}
+
 \usepackage{fancyhdr}
+
+
 \usepackage{lipsum}
 
+
+\setcounter{secnumdepth}{3}
+
+\interfootnotelinepenalty=10000
+
+
+\newcommand{\maj}[1]{{\color{red!40!yellow}{{#1}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewbibmacro{in:}{%
+	\ifentrytype{article}
+	{}
+	{\bibstring{in}%
+		\printunit{\intitlepunct}}}
+
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newcommand{\cm}[1]{\textcolor{blue}{#1}}
 
 \definecolor{yourcolor}{HTML}{8a0e19}%{008bb2}
 
 \titleformat{\chapter}[display]
 {\normalfont\color{yourcolor}}
 {\filleft\huge\color{black}\textsc\chaptertitlename\hspace*{2mm}%
-	\begin{tikzpicture}[baseline={([yshift=-.6ex]current bounding box.center)}]
-	\node[fill=yourcolor,circle,text=white] {\thechapter};
+	\begin{tikzpicture}[baseline={([yshift=-.1ex]current bounding box.center)}]
+		\node[fill=yourcolor,circle,text=white] {\thechapter};
 	\end{tikzpicture}
 }
 {1ex}
-{\titlerule[1.5pt]\vspace*{1.5ex}\Huge\color{black}\textsc}
+{\titlerule[1.5pt]\vspace*{1.ex}\Huge\color{black}\textsc}
 []
 
 \titleformat{name=\chapter,numberless}[display]
 {\normalfont\color{black}}
 {}
 {1ex}
-{\vspace*{-5cm}\Huge\textsc}
+{\Huge\textsc}
 []
 
 %command to print the acutal minitoc
@@ -69,30 +108,77 @@
 	\noindent\hspace{1cm}%
 	\colorlet{chpnumbercolor}{black}%
 	\begin{tikzpicture}
-	\node(s){
-		\begin{minipage}{.9\linewidth}%minipage trick
-		\printcontents[chapters]{}{1}{}
-		\end{minipage}
-	};
-	{
-		\color{yourcolor}
-		\draw(s.north west)--(s.north east) (s.south west)--(s.south east);
-	}
+		\node(s){
+			\begin{minipage}{.9\linewidth}%minipage trick
+				\printcontents[chapters]{}{1}{}
+			\end{minipage}
+		};
+		{
+			\color{yourcolor}
+			\draw(s.north west)--(s.north east) (s.south west)--(s.south east);
+		}
 	\end{tikzpicture}
-	\vspace*{3ex}
+	\vspace*{2ex}
 	
 	#1
-	\vfill
-	\pagebreak
+	%\vfill
+	%\pagebreak
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%\newcommand{\hsp}{\hspace{20pt}}
 \newcommand{\HRule}{\rule{\linewidth}{0.7mm}}
 \newcommand{\Hrule}{\rule{\linewidth}{0.3mm}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable} 
+
+\newtcolorbox{rmk}[1][]{
+	breakable,
+	%title=Remarque,
+	colback=white,
+	%colbacktitle=green!20!white,
+	%left=1cm,
+	left skip=1cm,
+	coltitle=black,
+	fonttitle=\bfseries,
+	bottomrule=0pt,
+	toprule=0pt,
+	leftrule=4pt,
+	rightrule=0pt,
+	titlerule=0pt,
+	arc=0pt,
+	outer arc=0pt,
+	colframe=yourcolor   
+}	
+%%%%%%%%%%%%%%%%% 			New commands			%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\ie}{\emph{i.e.},~}
+\newcommand{\eg}{\emph{e.g.},~}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+
+%%%%%%%%%%%%%%%%%% 		List of abreviations 		%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setacronymstyle{long-short} 
+\newglossary{symbols}{sym}{sbl}{Liste des abréviations et symboles}
+\makeglossaries
+
+\newglossaryentry{SIT}{type=symbols,
+	name=\ensuremath{STI},
+	%sort=fn,
+	description={Séquence Temporelle d'Images}
+}
+
+\newglossaryentry{SITS}{type=symbols,
+	name=\ensuremath{STIS},
+	%sort=fn,
+	description={Séries Temporelles d'Images Satellitaires}
+}
 
 
 
@@ -109,45 +195,53 @@
 	
 		
 		\begin{center}
-
-			Université de Paris\\
-			Laboratoire d’Informatique Paris Descartes (EA 2517)
-  
-  			\vfill
-  			
-	 		\HRule \\[0.1cm]
-	 		 { \Large \bfseries Title	 }
-	  		\Hrule \\
-		
+			{%\large
+				Université de Paris\\
+				École doctorale EDITE (130)\\
+				Laboratoire d’Informatique Paris Descartes (EA 2517)
+				%Équipe Systèmes Intelligents de Perception (SIP)
+			}
+			
+			\vfill
+			
+			\HRule \\[0.1cm]
+			{ \Large \bfseries Prise en compte de l'information spatiale et temporelle\\[0.05cm]pour l'analyse de séquences d'images }
+			\Hrule \\
 		\end{center}
 		
 		\vfill
-			
-		\begin{center}
-			Presented by \textsc{\Large FULLNAME}\\[1cm] 
-			PhD thesis in \textsc{\large SPECIALTY}\\[1cm]
-		
-	
-			
-			\vspace{1cm}
-	
-			June 2021
-		\end{center}
-		
-		\vspace{1cm}
-			
 		
 		\begin{center}
-			\begin{tabular}{lll}
-				 \textsc{FULLNAME}  &  \textsc{Grade} & Reporter\\
-				\textsc{FULLNAME}  &  \textsc{Grade} & Reporter \\
-				\textsc{FULLNAME}  &  \textsc{Grade} & Supervisor\\
-				\textsc{FULLNAME}  &  \textsc{Grade} & Supervisor \\
-				
-			\end{tabular}\\[1cm]
+			Présentée et soutenue publiquement le 26-11-2021 par :\\[0.3cm] 
+			\textsc{\large Mohamed Tayeb Chelali}\\[1.5cm] 
+			
+			Thèse de doctorat en :\\[0.2cm]
+			\textsc{\large Informatique }\\[.5cm]
+			
+			Spécialité :\\[0.2cm]
+			\textsc{\large Imagerie}\\[1cm]
 		\end{center}
-
-	\newpage
+		
+		%	\vfill
+		\vspace{1.5cm}
+		
+		
+		%Devant un jury composé de %\\[0.1cm]
+		\begin{center}
+			Membres du jury\\[0.2cm]
+			
+			
+			\resizebox{\linewidth}{!}{
+				\begin{tabular}{llr}
+					\textsc{FULLNAME}  &  \textsc{Grade} & Reporter\\
+					\textsc{FULLNAME}  &  \textsc{Grade} & Reporter \\
+					\textsc{FULLNAME}  &  \textsc{Grade} & Supervisor\\
+					\textsc{FULLNAME}  &  \textsc{Grade} & Supervisor \\
+				\end{tabular}
+			}\\[1cm]
+		\end{center}	
+		
+		\newpage
 	\end{titlepage}
 
 
@@ -160,24 +254,53 @@
 
 
 \frontmatter
+{
+	\setlength{\parskip}{.7em}
+	
+	\titlespacing*{\section}{0pt}{.9em}{.8em}
+	%\titlespacing*{\subsection}
+	%{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+	\renewcommand{\baselinestretch}{1.1}
+	\sloppy
+	
+	\include{Chapters/remerciments}
+	
+}
 
-\tableofcontents
-\addcontentsline{toc}{chapter}{Table des matières}
+{
+	\hypersetup{linkcolor=black}
+	
+	{\tableofcontents}
+	
+	{
+		\cleardoublepage
+		\addcontentsline{toc}{chapter}{Liste des figures}
+		\listoffigures
+	}
+	
+	
+	{
+		\cleardoublepage
+		\addcontentsline{toc}{chapter}{Liste des tableaux}
+		\listoftables
+	}
+		
+}
 
-\listoffigures
-\addcontentsline{toc}{chapter}{Liste des figures}
-
-\listoftables
-\addcontentsline{toc}{chapter}{Liste des tableaux}
-
-
-\mainmatter
+\printglossaries
 
 \setlength{\parskip}{.7em}
 
 \titlespacing*{\section}{0pt}{.9em}{.8em}
+%\titlespacing*{\subsection}
+%{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
 \renewcommand{\baselinestretch}{1.1}
+\sloppy
 
+
+\include{Chapters/absract}
+
+\mainmatter
 
 \fancyhead[RO]{\leftmark}
 \fancyhead[LE]{\textsc{\chaptername~\thechapter}}

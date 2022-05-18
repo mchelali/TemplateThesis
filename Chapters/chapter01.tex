@@ -1,12 +1,21 @@
 \chapter{Chapter 1}
 \epigraph{\itshape  La volonté trouve, la liberté choisit. Trouver et choisir, c'est penser}{-- Victor Hugo}
-
-\startcontents[chapters]
-\printmyminitoc{
-	\lipsum[1]
+{
+	\hypersetup{linkcolor=black}
+	\startcontents[chapters]
+	\printmyminitoc{
+	\maj{Pour créer un glossaire des acronyme, il faut citer les acronymes qui ont était déclarer dans le main.tex. 
+		Ensuite, il faut lancer \textit{Makeglosaries} et builder une 2eme fois pour que la liste des acronyme apparait dans le pdf/ 
+		une première citation \gls{SIT}.
+		et voila une 2eme \gls{SITS}}
 }
 
+}
+
+
 \section{section 1}
+
+
 
 \lipsum[1] \cite{imagenet_cvpr09}
 
